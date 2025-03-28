@@ -454,14 +454,24 @@ class TestPath(unittest.TestCase):
 
         # .name and .parent should still work on subs
         sub = root / "b"
-        self.assertEqual(sub.name, "b")
+        assert sub.name == "b"
         assert sub.parent
 
+    @pass_alpharep
+    def test_root_unnamed_str_and_repr(self, alpharep):
+        """
+        It is possible to get the str and repr of in-memory zipfile paths
+        """
+        alpharep.filename = None
+        root = zipfile.Path(alpharep)
+
         # It should be possible to get the repr and str
-        self.assertEqual(str(root), ":memory:/")
-        self.assertEqual(repr(root), "Path(None, '')")
-        self.assertEqual(str(sub), ":memory:/b/")
-        self.assertEqual(repr(sub), "Path(None, 'b/')")
+        assert str(root) == ":memory:/"
+        assert repr(root) == "Path(None, '')"
+
+        sub = root / "b"
+        assert str(sub) == ":memory:/b/"
+        assert repr(sub) == "Path(None, 'b/')"
 
     @pass_alpharep
     def test_match_and_glob(self, alpharep):
