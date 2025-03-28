@@ -459,7 +459,8 @@ class TestPath(unittest.TestCase):
     @pass_alpharep
     def test_root_unnamed_str_and_repr(self, alpharep):
         """
-        It is possible to get the str and repr of in-memory zipfile paths
+        Unnamed files have valid ``str`` and ``repr`` methods
+        (python/cpython#103120)
         """
         alpharep.filename = None
         root = zipfile.Path(alpharep)
